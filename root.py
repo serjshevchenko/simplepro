@@ -4,11 +4,17 @@ import os
 
 import cherrypy
 from cherrypy.process.plugins import Daemonizer
+from jinja2 import Environment, PackageLoader
+
 import modules
 
 # CONSTANTS*
 PATH = os.path.dirname(__file__)
 #*
+
+os.chdir(PATH)
+
+env = Environment(loader=PackageLoader('simplepro', './public/templates'))
 
 class Root (object) :
 
@@ -16,21 +22,24 @@ class Root (object) :
 
     @cherrypy.expose
     def index (self) :
-        html = '''<html>
-                        <head>
-                            <title> Index Page</title>
-                            <link type="text/css" rel="stylesheet" href="/static/css/style.css" />
-                            <script src="/static/js/script.js" text="text/javascript"></script>
-                        </head>
-                        <body>
-                            <h1>Hi there.</h1>
-                        </body>
-                    </html>
-                ''';
-        return html
+        
+        template = env.get_template('index.html')
+        #~ html = '''<html>
+                        #~ <head>
+                            #~ <title> Index Page</title>
+                            #~ <link type="text/css" rel="stylesheet" href="/static/css/style.css" />
+                            #~ <script src="/static/js/script.js" text="text/javascript"></script>
+                        #~ </head>
+                        #~ <body>
+                            #~ <h1>Hi there.</h1>
+                        #~ </body>
+                    #~ </html>
+                #~ ''';
+        #~ return html
+        return template.render(locals())
 
 
-os.chdir(PATH)
+
         
 cherrypy.config.update({
                     'server.socket_host': '0.0.0.0',

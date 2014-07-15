@@ -14,7 +14,7 @@ PATH = os.path.dirname(__file__)
 
 os.chdir(PATH)
 
-env = Environment(loader=PackageLoader('simplepro', './public/templates'))
+env = Environment(loader=PackageLoader('public', 'templates'))
 
 class Root (object) :
 
@@ -22,21 +22,8 @@ class Root (object) :
 
     @cherrypy.expose
     def index (self) :
-        
         template = env.get_template('index.html')
-        #~ html = '''<html>
-                        #~ <head>
-                            #~ <title> Index Page</title>
-                            #~ <link type="text/css" rel="stylesheet" href="/static/css/style.css" />
-                            #~ <script src="/static/js/script.js" text="text/javascript"></script>
-                        #~ </head>
-                        #~ <body>
-                            #~ <h1>Hi there.</h1>
-                        #~ </body>
-                    #~ </html>
-                #~ ''';
-        #~ return html
-        return template.render(locals())
+        return template.render(message='Hi There!')
 
 
 

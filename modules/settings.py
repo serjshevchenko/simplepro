@@ -1,17 +1,21 @@
 #!/usr/bin/env python
 
 import cherrypy
-
-from jinja2 import Environment, PackageLoader
-env = Environment(loader=PackageLoader('public', 'templates'))
+from public import viewer
+from models import user
 
 class Settings (object) :
     
     @cherrypy.expose
+    @viewer.page
     def index (self) :
-        temp = env.get_template('pages/settings/index.html')
-        return temp.render(message='Settings')
+        #~ bob = user.User('Timmy', 'T. Dog', '1111')
+        #~ bob.save()
+        return {
+            'message':'Settings'
+        }
     
+    @viewer.page
     @cherrypy.expose
     def edit (self, id) :
-        return 'Edit info of record # %s' % (id or 0);
+        return {'id':id}

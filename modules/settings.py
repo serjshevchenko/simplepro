@@ -7,7 +7,7 @@ from models import user
 class Settings (object) :
     
     @cherrypy.expose
-    @viewer.page
+    @viewer.display(template='settings/index.html')
     def index (self) :
         #~ bob = user.User('Timmy', 'T. Dog', '1111')
         #~ bob.save()
@@ -15,7 +15,7 @@ class Settings (object) :
             'message':'Settings'
         }
     
-    @viewer.page
+    @viewer.display
     @cherrypy.expose
     def edit (self, id) :
         return {'id':id}
